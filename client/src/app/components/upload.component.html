@@ -1,0 +1,32 @@
+<form [formGroup]="uploadPhoto" (ngSubmit)="upload()">
+
+<table>
+    <tr>
+        <td>Name:</td>
+        <td><input type="text" size="30" formControlName="title"></td>
+      </tr>
+    <tr>
+      <td>Title:</td>
+      <td><input type="text" size="30" formControlName="title"></td>
+    </tr>
+    <tr>
+      <td>Comments:</td>
+      <td>
+        <textarea cols="30" rows="4" formControlName="complain">
+        </textarea>
+      </td>
+    </tr>
+    <tr>
+        <td>Archive (ZIP file):</td>
+        <td><input type="file" formControlName="archive" accept=".zip"></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td>
+        <button type="button" [routerLink]="['/']">Cancel</button>
+        <button type="submit" [disabled]="uploadPhoto.invalid">Submit</button>
+      </td>
+    </tr>
+  </table>
+
+</form>

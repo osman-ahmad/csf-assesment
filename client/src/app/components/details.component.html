@@ -1,0 +1,7 @@
+<h2>Upload Details</h2>
+<div *ngIf="formData">
+  <p><strong>Name:</strong> {{formData.name}}</p>
+  <p><strong>Title:</strong> {{formData.title}}</p>
+  <p><strong>Comments:</strong> {{formData.complain}}</p>
+</div>
+<button (click)="backToMain()">Back to Main Page</button>
