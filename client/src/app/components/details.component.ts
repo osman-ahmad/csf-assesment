@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { ArchiveRepository } from '../models/archive.repository';
+
 
 @Component({
   selector: 'app-details',
@@ -9,19 +9,12 @@ import { ArchiveRepository } from '../models/archive.repository';
   styleUrls: ['./details.component.css']
 })
 
-export class DetailsComponent implements OnInit {
+export class DetailsComponent  {
 
-  formData: any;
+  
    
 
-  constructor(private router: Router, private uploadService: UploadService) {
-
-    this.formData = this.uploadService.getFormData();
-  }
-
-  backToMain() {
-    this.router.navigate(['/']);
-  }
+ 
 }
 
 

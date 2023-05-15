@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { PhotoService } from '../services/photo.service';
 // import { Route, Router } from '@angular/router';
 
 @Component({
@@ -10,41 +12,47 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 
 export class UploadComponent implements OnInit {
   uploadPhoto!: FormGroup;
+  blob!: Blob;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private router: Router, private fb: FormBuilder, 
+    private photosvc: PhotoService) {}
 
-  // ngOnInit() {
-  //   this.uploadPhoto = this.fb.group({
-  //     name: [''],
-  //     title: [''],
-  //     comments: [''],
-  //     archive: [null]
-  //   });
-  // }
-  ngOnInit(): void {
-      this.uploadPhoto = this.fb.group({
-      name: this.fb.control<string>(''),
-      title: this.fb.control<string>(''),
-      complain: this.fb.control<string>('')
-      
-    })
     
-  }
-  upload() {
-    const formData = new FormData();
-    formData.append('name', this.uploadPhoto.value.name);
-    formData.append('title', this.uploadPhoto.value.title);
-    formData.append('comments', this.uploadPhoto.value.comments);
-    formData.append('archive', this.uploadPhoto.value.archive);
+       ngOnInit(): void {
+      this.uploadPhoto = this.createForm();
+    }
+  
+    createForm() {
+      return this.fb.group({
+        name: this.fb.control<string>('', [Validators.required]),
+        title: this.fb.control<string>('', [Validators.required]),
+        comments: this.fb.control<string>(''),
+        archive: this.fb.control('', [Validators.required]),
+      });
+    }
+    
+    onFileChange(event: any) {
+      const file = event.target.files[0];
+      this.blob = file;
+    } 
 
-    // Here, you can make an HTTP request to send the form data to the backend
-    // For example, using Angular's HttpClient
-    // this.http.post('your-backend-url', formData).subscribe(response => {
-    //   console.log(response);
-    //   // Handle response or any other necessary logic
-    // }, error => {
-    //   console.error(error);
-    //   // Handle error or any other necessary logic
-    // });
+    upload() {  
+      const formData = new FormData();
+      formData.set("name", this.uploadPhoto.value['name']);
+      formData.set("title", this.uploadPhoto.value['title']);
+      formData.set("comments", this.uploadPhoto.value['comments']);
+      formData.set("file", this.blob);
+
+      this.photosvc.upload(formData)
+    .then((val: any) => {  
+      console.log(val);
+    })
+    .catch((error: any) => {
+      console.log(error);
+    });
+      
+
   }
+
+
 }

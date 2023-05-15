@@ -9,6 +9,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { UploadComponent } from './components/upload.component';
 import { DetailsComponent } from './components/details.component';
+import { MainComponent } from './components/main.component';
+
 
 
 
@@ -16,7 +18,8 @@ import { DetailsComponent } from './components/details.component';
   declarations: [
     AppComponent,
     UploadComponent,
-    DetailsComponent
+    DetailsComponent,
+    MainComponent
   ],
 
   imports: [

@@ -18,13 +18,13 @@
     </tr>
     <tr>
         <td>Archive (ZIP file):</td>
-        <td><input type="file" formControlName="archive" accept=".zip"></td>
+        <td><input type="file" formControlName="uploadFile" (change)="onFileChange($event)"/></td>
     </tr>
     <tr>
       <td></td>
       <td>
         <button type="button" [routerLink]="['/']">Cancel</button>
-        <button type="submit" [disabled]="uploadPhoto.invalid">Submit</button>
+        <button type="submit" >Submit</button>
       </td>
     </tr>
   </table>

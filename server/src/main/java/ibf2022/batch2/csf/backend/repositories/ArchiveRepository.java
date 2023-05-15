@@ -1,6 +1,8 @@
 package ibf2022.batch2.csf.backend.repositories;
 
 
+
+import java.util.List;
 import java.util.Optional;
 
 import org.bson.Document;
@@ -18,7 +20,7 @@ import ibf2022.batch2.csf.backend.models.Archive;
 public class ArchiveRepository {
 
 	@Autowired
-	private MongoTemplate template;
+	private MongoTemplate mongoTemplate;
 
 	// db.archives.insert({
 	// 	    bundleId: "bundleId",
@@ -29,7 +31,7 @@ public class ArchiveRepository {
 	// 		urls: ["url1", "url2", ...]
 	//   })
 	public ObjectId recordBundle(Archive archive) {
-		Document insertedDoc = template.insert(archive.toDocument(), "archives");
+		Document insertedDoc = mongoTemplate.insert(archive.toDocument(), "archives");
 		return insertedDoc.getObjectId("_id");
 	}
 
@@ -44,7 +46,7 @@ public class ArchiveRepository {
 		
 		Criteria criteria = Criteria.where("bundleId").is(bundleId);
 		Query query = Query.query(criteria);
-		Document result = template.findOne(query, Document.class, "post");
+		Document result = mongoTemplate.findOne(query, Document.class, "post");
 		if (null == result)
 			return Optional.empty();
 
@@ -59,9 +61,14 @@ public class ArchiveRepository {
 	// Write the native mongo query that you will be using in this method
 	//
 	//
-	public Object getBundles(/* any number of parameters here */) {
-		return null;
-	}
+	// public Object getBundles(/* any number of parameters here */) {
+	// 	return null;
+	// }
+	public List<Archive> getBundles() {
+        Query query = new Query();
+        query.fields().include("title").include("date");
+        return mongoTemplate.find(query, Archive.class);
+    }
 
 
 }
